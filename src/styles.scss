@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'El Messiri', sans-serif;
+user-select: none;
+}
+.error{
+  background-color: #FFF;
+  color: red;
+  font-weight: 500;
+  font-family:'El Messiri';
+}
+
+.success{
+  background-color: #FFF;
+  color: green;
+  font-weight: 500;
+  font-family:'El Messiri';
+}
