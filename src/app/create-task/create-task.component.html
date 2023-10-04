@@ -1,0 +1,22 @@
+<!-- navbar is start -->
+<app-navbar></app-navbar>
+<!-- navbar is finish -->
+
+<div class="add-tasks">
+  <div class="container">
+    <div class="row">
+      <form [formGroup]="this.taskForm" (ngSubmit)="createTask()">
+        <div  class="mb-3">
+          <label for="title" class="form-label">Task Title</label>
+          <input type="text" class="form-control" id="title" placeholder="Task Name" formControlName="title">
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" id="description" rows="3" formControlName="description">
+        </textarea>
+        </div>
+        <button mat-raised-button type="submit" color="primary">Add</button>
+      </form>
+    </div>
+  </div>
+</div>

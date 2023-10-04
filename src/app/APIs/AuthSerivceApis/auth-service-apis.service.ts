@@ -10,7 +10,7 @@ export class AuthServiceApisService {
   protected token : any = localStorage.getItem('token');
 
   protected headers = new HttpHeaders()
-  .append('token_authorization', `${this.token}`);
-  
+  .append('token', `${this.token}`);
+
   constructor() { }
 }

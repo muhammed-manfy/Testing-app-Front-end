@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../APIs/user/user.service';
 import { Route, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Task } from '../Models/Task.model';
+import { TasksService } from '../APIs/tasks/tasks.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteTaskComponent } from '../delete-task/delete-task.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,28 +13,31 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  apiGetUser:any;
-  user_id = localStorage.getItem('user-id');
-  userInfo:any;
-  constructor(private userSerivce:UserService,private router:Router,
-    private snackBar:MatSnackBar){}
+  user_id = Number(localStorage.getItem('user-id'));
+  userTasksApiResponse:any;
+  userTasksList : Array<Task> = [];
+  constructor(private taskService:TasksService,private router:Router,
+    private snackBar:MatSnackBar,private dialog:MatDialog){}
 
   async ngOnInit():Promise<void>{
-    (await this.userSerivce.getUser(this.user_id)).subscribe(user=>{
-        this.apiGetUser = user;
-        this.userInfo  =this.apiGetUser.data;
+    (await this.taskService.getUserTasks(this.user_id)).subscribe(Tasks=>{
+        this.userTasksApiResponse = Tasks;
+        this.userTasksList = this.userTasksApiResponse.data;
     });
   }
 
-  logout(){
-    localStorage.removeItem("token");
-    localStorage.removeItem("user-id");
-    this.router.navigateByUrl('/login');
-    this.snackBar.open("You have logged out","Ok",{
-      duration: 3 * 1000,
-      horizontalPosition:"center",
-      verticalPosition:"bottom",
-      panelClass:['success']
+  editTask(taskId:any){
+    this.router.navigate(['/Update-Task'],{
+      queryParams:{
+        taskId:taskId
+      }
     });
+  }
+
+  deleteTask(taskId:any){
+      this.dialog.open(DeleteTaskComponent, {
+        width: '250px',
+        data:{taskId}
+      });
   }
 }

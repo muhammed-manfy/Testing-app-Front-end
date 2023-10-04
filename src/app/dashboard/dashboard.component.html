@@ -1,10 +1,23 @@
-<div class="card text-center">
-  <div class="card-header">
-    Dashboard
-  </div>
-  <div class="card-body">
-    <h5 class="card-title" style="font-weight: 500;">Welcome Mr:</h5>
-    <p class="card-text"><strong>{{this.userInfo.name}}</strong></p>
-    <a class="btn btn-primary" (click)="logout()">logout</a>
+<!-- navbar is started -->
+<app-navbar></app-navbar>
+<!-- navbar is finished -->
+
+<div class="container">
+  <div class="row">
+    <div *ngFor="let task of userTasksList" class="col-4">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">{{task.title}}</h4>
+          <h6 class="card-subtitle mb-2 text-body-secondary">{{task.created_at | date : 'short'}}</h6>
+          <p class="card-text">{{task.description}}.</p>
+          <a class="card-link" (click)="deleteTask(task.id)">  <button mat-fab color="primary">
+            <mat-icon>delete</mat-icon>
+          </button></a>
+          <a class="card-link" (click)="editTask(task.id)"><button mat-fab color="primary" aria-label="Example icon button with a delete icon">
+            <mat-icon>edit</mat-icon>
+          </button></a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
